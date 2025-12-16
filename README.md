@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/YoannDev90/kde_modernclock/blob/main/assets/ss.png"/>
+  <img src="https://github.com/YoannDev90/kde_modernclock/blob/main/assets/screenshot.png"/>
 </p>
 
 ## Improvements
