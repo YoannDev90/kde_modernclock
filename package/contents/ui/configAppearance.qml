@@ -114,7 +114,9 @@ Kirigami.ScrollablePage {
             }
             TextField {
                 id: timeFormat
-                placeholderText: "hh:mm:ss"
+                placeholderText: "hh:mm:ss | h:mm:ss AP | HH:mm:ss"
+                hoverEnabled: true
+                ToolTip.text: i18n("Use Qt time formats like 'hh:mm:ss', 'h:mm:ss AP', or 'HH:mm:ss'. h/H = 12h/24h (double letters zero-pad), m = minutes, s = seconds. Using seconds refreshes every second. Leave empty to keep the default 12/24h setting.")
             }
         }
         RowLayout {
