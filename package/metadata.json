@@ -2,18 +2,18 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "prayagjain2@gmail.com",
-                "Name": "Prayag Jain"
+                "Email": "yoanndev@outlook.fr",
+                "Name": "Yoann"
             }
         ],
         "Category": "Date and Time",
         "Description": "A modern looking clock widget for your Desktop!",
         "Icon": "clock",
-        "Id": "com.github.prayag2.modernclock",
+        "Id": "com.github.yoanndev90.modernclock",
         "License": "GPLv3",
-        "Name": "Modern Clock",
-        "Version": "1.0.0",
-        "Website": "https://github.com/prayag2/kde_modernclock"
+        "Name": "Modern reClock",
+        "Version": "1.0.1",
+        "Website": "https://github.com/YoannDev90/kde_modernclock"
         
     },
     "X-Plasma-API-Minimum-Version": "6.0",
