@@ -45,18 +45,64 @@ PlasmoidItem {
             property bool use24HourFormat: plasmoid.configuration.use_24_hour_format
             property string timeCharacter: plasmoid.configuration.time_character
             property string dateFormat: plasmoid.configuration.date_format
-            
-            onUse24HourFormatChanged: dataChanged()
-            onTimeCharacterChanged: dataChanged()
-            onDateFormatChanged: dataChanged()
+            property string timeFormat: plasmoid.configuration.time_format
+            property bool usesSeconds: false
+            readonly property string default24HourFormat: "hh:mm"
+            readonly property string default12HourFormat: "hh:mm AP"
+            readonly property int secondInterval: 1000
+            readonly property int minuteInterval: 60000
+            function currentTimeFormat() {
+                var custom = timeFormat ? timeFormat.trim() : ""
+                return custom.length > 0 ? custom : (use24HourFormat ? default24HourFormat : default12HourFormat)
+            }
+
+            function updateIntervalForFormat(format) {
+                // Qt time format uses 's' or 'ss' for seconds; adjust refresh cadence when seconds are present.
+                var needsSeconds = /s{1,2}/.test(format)
+                if (needsSeconds !== usesSeconds) {
+                    usesSeconds = needsSeconds
+                    interval = needsSeconds ? secondInterval : minuteInterval
+                    intervalAlignment = needsSeconds ? Plasma5Support.Types.NoAlignment : Plasma5Support.Types.AlignToMinute
+                }
+            }
+
+            function formatTimeSafely(date) {
+                var format = currentTimeFormat()
+                updateIntervalForFormat(format)
+                var formatted = ""
+                try {
+                    formatted = Qt.formatTime(date, format)
+                } catch (e) {
+                    formatted = ""
+                }
+                if (!formatted || formatted.trim() === "") {
+                    format = use24HourFormat ? default24HourFormat : default12HourFormat
+                    updateIntervalForFormat(format)
+                    formatted = Qt.formatTime(date, format)
+                }
+                return formatted
+            }
 
             onDataChanged: {
-                var time_format = use24HourFormat ? "hh:mm" : "hh:mm AP"
                 var curDate = dataSource.data["Local"]["DateTime"]
+                var formattedTime = formatTimeSafely(curDate)
                 display_day.text = Qt.formatDate(curDate, "dddd").toUpperCase()
                 display_date.text = Qt.formatDate(curDate, dateFormat).toUpperCase()
-                display_time.text = timeCharacter + " " + Qt.formatTime(curDate, time_format) + " " + timeCharacter
+                display_time.text = timeCharacter + " " + formattedTime + " " + timeCharacter
             }
+
+            onUse24HourFormatChanged: {
+                updateIntervalForFormat(currentTimeFormat())
+                dataChanged()
+            }
+            onTimeCharacterChanged: dataChanged()
+            onDateFormatChanged: dataChanged()
+            onTimeFormatChanged: {
+                updateIntervalForFormat(currentTimeFormat())
+                dataChanged()
+            }
+
+            Component.onCompleted: updateIntervalForFormat(currentTimeFormat())
 
             
         }
