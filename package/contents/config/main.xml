@@ -33,6 +33,9 @@
         <entry name="time_letter_spacing" type="Int">
             <default>3</default>
         </entry>
+        <entry name="time_format" type="String">
+            <default></default>
+        </entry>
         <entry name="time_font_color" type="Color">
             <default>#FFFFFF</default>
         </entry>

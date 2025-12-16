@@ -39,19 +39,21 @@ PlasmoidItem {
             id: dataSource
             engine: "time"
             connectedSources: ["Local"]
-            intervalAlignment: Plasma5Support.Types.AlignToMinute
-            interval: 60000
+            intervalAlignment: Plasma5Support.Types.NoAlignment
+            interval: 1000
 
             property bool use24HourFormat: plasmoid.configuration.use_24_hour_format
             property string timeCharacter: plasmoid.configuration.time_character
             property string dateFormat: plasmoid.configuration.date_format
+            property string timeFormat: plasmoid.configuration.time_format
             
             onUse24HourFormatChanged: dataChanged()
             onTimeCharacterChanged: dataChanged()
             onDateFormatChanged: dataChanged()
+            onTimeFormatChanged: dataChanged()
 
             onDataChanged: {
-                var time_format = use24HourFormat ? "hh:mm" : "hh:mm AP"
+                var time_format = timeFormat && timeFormat.length > 0 ? timeFormat : (use24HourFormat ? "hh:mm" : "hh:mm AP")
                 var curDate = dataSource.data["Local"]["DateTime"]
                 display_day.text = Qt.formatDate(curDate, "dddd").toUpperCase()
                 display_date.text = Qt.formatDate(curDate, dateFormat).toUpperCase()
