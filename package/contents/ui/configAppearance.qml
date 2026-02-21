@@ -24,8 +24,22 @@ Kirigami.ScrollablePage {
     property alias cfg_time_format: timeFormat.text
     property alias cfg_date_format: dateFormat.text
     property alias cfg_date_font_color: dateFontColor.color
+    property alias cfg_widget_spacing: widgetSpacing.value
+    property alias cfg_day_format: dayFormat.text
+    property alias cfg_uppercase_day: uppercaseDay.checked
+    property alias cfg_uppercase_date: uppercaseDate.checked
+    property alias cfg_day_font_bold: dayFontBold.checked
+    property alias cfg_date_font_bold: dateFontBold.checked
+    property alias cfg_time_font_bold: timeFontBold.checked
 
     Kirigami.FormLayout {
+        Title {
+            title: i18n("General")
+        }
+        NumberField {
+            id: widgetSpacing
+            label: i18n("Element Spacing")
+        }
         Title {
             title: i18n("Day")
         }
@@ -40,10 +54,39 @@ Kirigami.ScrollablePage {
         NumberField {
             id: dayFontSize
             label: i18n("Font Size")
+            from: 1
         }
         NumberField {
             id: dayLetterSpacing
             label: i18n("Letter Spacing")
+        }
+        RowLayout {
+            Label {
+                text: i18n("Day format")
+            }
+            TextField {
+                id: dayFormat
+                placeholderText: "dddd"
+                ToolTip.text: i18n("Use Qt date formats: 'dddd' = full name, 'ddd' = short name. Leave empty for the full weekday name.")
+                ToolTip.visible: hovered
+                ToolTip.delay: 800
+            }
+        }
+        RowLayout {
+            Label {
+                text: i18n("Uppercase")
+            }
+            CheckBox {
+                id: uppercaseDay
+            }
+        }
+        RowLayout {
+            Label {
+                text: i18n("Bold")
+            }
+            CheckBox {
+                id: dayFontBold
+            }
         }
         ColorDial {
             id: dayFontColor
@@ -63,6 +106,7 @@ Kirigami.ScrollablePage {
         NumberField {
             id: dateFontSize
             label: i18n("Font Size")
+            from: 1
         }
         NumberField {
             id: dateLetterSpacing
@@ -74,6 +118,26 @@ Kirigami.ScrollablePage {
             }
             TextField {
                 id: dateFormat
+                placeholderText: "dd MMM yyyy"
+                ToolTip.text: i18n("Use Qt date formats like 'dd MMM yyyy', 'MM/dd/yyyy', or 'ddd d MMMM'. d/dd = day, M/MM/MMM/MMMM = month, yy/yyyy = year.")
+                ToolTip.visible: hovered
+                ToolTip.delay: 800
+            }
+        }
+        RowLayout {
+            Label {
+                text: i18n("Uppercase")
+            }
+            CheckBox {
+                id: uppercaseDate
+            }
+        }
+        RowLayout {
+            Label {
+                text: i18n("Bold")
+            }
+            CheckBox {
+                id: dateFontBold
             }
         }
         ColorDial {
@@ -95,6 +159,7 @@ Kirigami.ScrollablePage {
         NumberField {
             id: timeFontSize
             label: i18n("Font Size")
+            from: 1
         }
         NumberField {
             id: timeLetterSpacing
@@ -115,8 +180,9 @@ Kirigami.ScrollablePage {
             TextField {
                 id: timeFormat
                 placeholderText: "hh:mm:ss | h:mm:ss AP | HH:mm:ss"
-                hoverEnabled: true
                 ToolTip.text: i18n("Use Qt time formats like 'hh:mm:ss', 'h:mm:ss AP', or 'HH:mm:ss'. h/H = 12h/24h (double letters zero-pad), m = minutes, s = seconds. Using seconds refreshes every second. Leave empty to keep the default 12/24h setting.")
+                ToolTip.visible: hovered
+                ToolTip.delay: 800
             }
         }
         RowLayout {
@@ -126,6 +192,18 @@ Kirigami.ScrollablePage {
             TextField {
                 id: timeCharacter
                 maximumLength: 1
+                placeholderText: "-"
+                ToolTip.text: i18n("A single character displayed on both sides of the time. Leave empty to show no decoration.")
+                ToolTip.visible: hovered
+                ToolTip.delay: 800
+            }
+        }
+        RowLayout {
+            Label {
+                text: i18n("Bold")
+            }
+            CheckBox {
+                id: timeFontBold
             }
         }
         ColorDial {

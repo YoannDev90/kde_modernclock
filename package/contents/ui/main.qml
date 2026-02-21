@@ -46,6 +46,9 @@ PlasmoidItem {
             property string timeCharacter: plasmoid.configuration.time_character
             property string dateFormat: plasmoid.configuration.date_format
             property string timeFormat: plasmoid.configuration.time_format
+            property string dayFormat: plasmoid.configuration.day_format
+            property bool uppercaseDay: plasmoid.configuration.uppercase_day
+            property bool uppercaseDate: plasmoid.configuration.uppercase_date
             property bool usesSeconds: false
             readonly property string default24HourFormat: "hh:mm"
             readonly property string default12HourFormat: "hh:mm AP"
@@ -86,8 +89,11 @@ PlasmoidItem {
             onDataChanged: {
                 var curDate = dataSource.data["Local"]["DateTime"]
                 var formattedTime = formatTimeSafely(curDate)
-                display_day.text = Qt.formatDate(curDate, "dddd").toUpperCase()
-                display_date.text = Qt.formatDate(curDate, dateFormat).toUpperCase()
+                var df = dayFormat && dayFormat.trim().length > 0 ? dayFormat : "dddd"
+                var dayText = Qt.formatDate(curDate, df)
+                display_day.text = uppercaseDay ? dayText.toUpperCase() : dayText
+                var dateText = Qt.formatDate(curDate, dateFormat)
+                display_date.text = uppercaseDate ? dateText.toUpperCase() : dateText
                 display_time.text = timeCharacter + " " + formattedTime + " " + timeCharacter
             }
 
@@ -97,6 +103,9 @@ PlasmoidItem {
             }
             onTimeCharacterChanged: dataChanged()
             onDateFormatChanged: dataChanged()
+            onDayFormatChanged: dataChanged()
+            onUppercaseDayChanged: dataChanged()
+            onUppercaseDateChanged: dataChanged()
             onTimeFormatChanged: {
                 updateIntervalForFormat(currentTimeFormat())
                 dataChanged()
@@ -113,7 +122,7 @@ PlasmoidItem {
 
             // Column settings
             anchors.centerIn: parent
-            spacing: 5
+            spacing: plasmoid.configuration.widget_spacing
 
             // The day ("Tuesday", "Wednesday" etc..)
             PlasmaComponents.Label {
@@ -126,6 +135,7 @@ PlasmoidItem {
                 font.pixelSize: plasmoid.configuration.day_font_size
                 font.letterSpacing: plasmoid.configuration.day_letter_spacing
                 font.family: font_anurati.name
+                font.bold: plasmoid.configuration.day_font_bold
                 color: plasmoid.configuration.day_font_color
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Text.AlignHCenter 
@@ -142,6 +152,7 @@ PlasmoidItem {
                 font.pixelSize: plasmoid.configuration.date_font_size
                 font.letterSpacing: plasmoid.configuration.date_letter_spacing
                 font.family: font_poppins.name
+                font.bold: plasmoid.configuration.date_font_bold
                 color: plasmoid.configuration.date_font_color
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -157,6 +168,7 @@ PlasmoidItem {
                 // font settings
                 font.pixelSize: plasmoid.configuration.time_font_size
                 font.family: font_poppins.name
+                font.bold: plasmoid.configuration.time_font_bold
                 color: plasmoid.configuration.time_font_color
                 font.letterSpacing: plasmoid.configuration.time_letter_spacing
                 horizontalAlignment: Text.AlignHCenter

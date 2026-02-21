@@ -17,6 +17,13 @@
 ## Improvements
 - Added support for seconds
 - Added support for custom time format
+- Added configurable spacing between elements
+- Fixed letter spacing minimum to allow 0
+- Added tooltips and placeholder text for date/time format fields
+- Consistent widget name across codebase
+- Added custom day format (e.g. full name vs abbreviated)
+- Added uppercase toggle for day and date rows
+- Added bold font toggle for day, date, and time sections
 
 ## Installation
 #### KDE Store (Preferred way)
