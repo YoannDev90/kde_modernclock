@@ -113,7 +113,7 @@ PlasmoidItem {
 
             // Column settings
             anchors.centerIn: parent
-            spacing: 5
+            spacing: plasmoid.configuration.widget_spacing
 
             // The day ("Tuesday", "Wednesday" etc..)
             PlasmaComponents.Label {

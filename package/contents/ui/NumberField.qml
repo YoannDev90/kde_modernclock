@@ -6,13 +6,15 @@ RowLayout {
     id: numberField
     property alias label: numberField_label.text;
     property alias value: numberField_spinbox.value
+    property alias from: numberField_spinbox.from
+    property alias to: numberField_spinbox.to
 
     Label {
         id: numberField_label
     }
     SpinBox {
         id: numberField_spinbox
-        from: 1
+        from: 0
         to: 999
     }
 }

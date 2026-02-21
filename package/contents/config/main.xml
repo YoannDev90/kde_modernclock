@@ -54,5 +54,8 @@
         <entry name="time_character" type="String">
             <default>-</default>
         </entry>
+        <entry name="widget_spacing" type="Int">
+            <default>5</default>
+        </entry>
     </group>
 </kcfg> 
