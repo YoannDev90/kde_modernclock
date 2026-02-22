@@ -9,11 +9,11 @@
         "Category": "Date and Time",
         "Description": "A modern looking clock widget for your Desktop!",
         "Icon": "clock",
-        "Id": "com.github.yoanndev90.modernclock",
+        "Id": "com.github.yoanndev90.modernreclock",
         "License": "GPLv3",
-        "Name": "Modern Clock",
+        "Name": "Modern reClock",
         "Version": "1.0.1",
-        "Website": "https://github.com/YoannDev90/kde_modernclock"
+        "Website": "https://github.com/YoannDev90/KDE-Modern-reClock"
         
     },
     "X-Plasma-API-Minimum-Version": "6.0",
