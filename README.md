@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://github.com/YoannDev90/kde_modernclock/blob/main/assets/logo.jpg" width=100/>
-  <h2 align="center">Modern Clock for KDE</h2>
+  <h2 align="center">Modern reClock for KDE</h2>
   <p align="center">A modern looking clock widget!</center>
 </p>
 
@@ -31,7 +31,7 @@
 2. Click on "Add Widgets"
 3. Click on "Get New Widgets"
 4. Click on "Download New Plasma Widgets"
-5. Search for "Modern Clock"
+5. Search for "Modern reClock"
 6. Click on "Install" and you're done!
 
 #### From this repository
