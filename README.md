@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="https://github.com/YoannDev90/kde_modernclock/blob/main/assets/logo.jpg" width=100/>
+  <img src="https://github.com/YoannDev90/KDE-Modern-reClock/blob/main/assets/logo.jpg" width=100/>
   <h2 align="center">Modern reClock for KDE</h2>
   <p align="center">A modern looking clock widget!</center>
 </p>
 
 <p align="center">
-<a href="https://github.com/YoannDev90/kde_modernclock/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/YoannDev90/kde_modernclock?color=%233DAEE9&style=for-the-badge"></a>
-<a href="https://github.com/YoannDev90/kde_modernclock/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/YoannDev90/kde_modernclock?color=%233DAEE9&style=for-the-badge"></a>
-<a href="https://github.com/YoannDev90/kde_modernclock/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/YoannDev90/kde_modernclock?color=%233DAEE9&style=for-the-badge"></a>
+<a href="https://github.com/YoannDev90/KDE-Modern-reClock/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/YoannDev90/KDE-Modern-reClock?color=%233DAEE9&style=for-the-badge"></a>
+<a href="https://github.com/YoannDev90/KDE-Modern-reClock/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/YoannDev90/KDE-Modern-reClock?color=%233DAEE9&style=for-the-badge"></a>
+<a href="https://github.com/YoannDev90/KDE-Modern-reClock/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/YoannDev90/KDE-Modern-reClock?color=%233DAEE9&style=for-the-badge"></a>
 </p>
 
 <p align="center">
-  <img src="https://github.com/YoannDev90/kde_modernclock/blob/main/assets/screenshot.png"/>
+  <img src="https://github.com/YoannDev90/KDE-Modern-reClock/blob/main/assets/screenshot.png"/>
 </p>
 
 ## Improvements
@@ -36,6 +36,6 @@
 
 #### From this repository
 1. Clone this repository  
-`git clone https://github.com/YoannDev90/kde_modernclock && cd kde_modernclock/`  
+`git clone https://github.com/YoannDev90/KDE-Modern-reClock && cd KDE-Modern-reClock/`  
 2. Install using the script  
 `kpackagetool5 -i package` or `plasmapkg2 -i package`
