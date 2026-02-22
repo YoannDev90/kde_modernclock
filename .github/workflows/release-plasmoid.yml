@@ -1,0 +1,66 @@
+name: Release KDE Plasmoid
+
+on:
+  workflow_dispatch:  # Bouton manuel dans Actions
+    inputs:
+      version:
+        description: 'Version de la release (ex: 1.0.1)'
+        required: true
+        default: '1.0.0'
+      prerelease:
+        description: 'Marquer comme pré-release ?'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Pour les tags
+
+    - name: Vérifier structure package/
+      run: |
+        if [ ! -d "package" ]; then
+          echo "Erreur: dossier 'package/' manquant !"
+          exit 1
+        fi
+        if [ ! -f "package/metadata.json" ]; then
+          echo "Erreur: package/metadata.json manquant !"
+          exit 1
+        fi
+
+    - name: Mettre à jour metadata.json
+      run: |
+        # Auto-update version dans metadata.json
+        sed -i "s/\"Version\": \".*\"/\"Version\": \"${{ github.event.inputs.version || '1.0.0' }}\"/" package/metadata.json
+
+    - name: Créer plasmoid archive
+      run: |
+        cd package
+        zip -r ../KDE-Modern-reClock-${{ github.event.inputs.version || '1.0.0' }}.plasmoid .
+        cd ..
+
+    - name: Créer Release GitHub
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ github.event.inputs.version || '1.0.0' }}
+        name: KDE Modern reClock v${{ github.event.inputs.version || '1.0.0' }}
+        body: |
+          # KDE Modern reClock v${{ github.event.inputs.version || '1.0.0' }}
+          
+          Thème moderne pour le widget reClock Plasma 6.
+          
+          ## Installation
+          1. Téléchargez `KDE-Modern-reClock-*.plasmoid`
+          2. Double-clic ou `plasmapkg3 --install KDE-Modern-reClock-*.plasmoid`
+          3. Ajoutez le widget reClock et appliquez le thème.
+          
+          [GitHub](https://github.com/YoannDev90/KDE-Modern-reClock)
+        files: |
+          KDE-Modern-reClock-${{ github.event.inputs.version || '1.0.0' }}.plasmoid
+        prerelease: ${{ github.event.inputs.prerelease }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
