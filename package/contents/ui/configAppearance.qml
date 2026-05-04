@@ -67,7 +67,7 @@ KCM.SimpleKCM {
             Kirigami.FormData.label: i18n("Locale:")
             Layout.fillWidth: true
 
-            placeholderText: i18n("System default, e.g. fr_BE, en_GB, nl_BE")
+            placeholderText: i18n("e.g. fr_BE, en_GB, nl_BE")
 
             QQC2.ToolTip.text: i18n("Locale used for weekday and month names. Leave empty to use the system locale.")
             QQC2.ToolTip.visible: hovered
@@ -239,13 +239,13 @@ KCM.SimpleKCM {
         QQC2.TextField {
             id: timeCharacter
 
-            Kirigami.FormData.label: i18n("Style character:")
+            Kirigami.FormData.label: i18n("Decoration character:")
             Layout.fillWidth: true
 
             maximumLength: 1
             placeholderText: "-"
 
-            QQC2.ToolTip.text: i18n("A single character displayed on both sides of the time. Leave empty to show no decoration.")
+            QQC2.ToolTip.text: i18n("A character displayed on both sides of the time. Leave empty to show no decoration.")
             QQC2.ToolTip.visible: hovered
             QQC2.ToolTip.delay: 800
         }
