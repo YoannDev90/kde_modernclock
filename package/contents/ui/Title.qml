@@ -5,7 +5,7 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 ColumnLayout {
     id: mainGroup
-    property alias title: groupLabel.text 
+    property alias title: groupLabel.text
 
     Item {
         height: 10

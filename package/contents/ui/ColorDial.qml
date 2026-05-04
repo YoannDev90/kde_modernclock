@@ -11,15 +11,14 @@ RowLayout {
 
     Label {
         text: i18n("Font Color")
-    }             
+    }
     KQControls.ColorButton {
-      id: colorbutton
-      color: root.color
-      showAlphaChannel: false
+        id: colorbutton
+        color: root.color
+        showAlphaChannel: false
 
-      onAccepted: {
-        root.color = color
-      }
+        onAccepted: {
+            root.color = color
+        }
     }
 }
-
