@@ -6,7 +6,7 @@ import org.kde.kirigami 2.4 as Kirigami
 
 Kirigami.ScrollablePage {
     id: appearancePage
-    
+
     // properties
     property alias cfg_show_day: showDay.checked
     property alias cfg_show_date: showDate.checked
@@ -19,6 +19,7 @@ Kirigami.ScrollablePage {
     property alias cfg_date_letter_spacing: dateLetterSpacing.value
     property alias cfg_time_letter_spacing: timeLetterSpacing.value
     property alias cfg_time_font_color: timeFontColor.color
+    property alias cfg_locale: locale.text
     property alias cfg_use_24_hour_format: use24HourFormat.checked
     property alias cfg_time_character: timeCharacter.text
     property alias cfg_time_format: timeFormat.text
@@ -59,6 +60,19 @@ Kirigami.ScrollablePage {
         NumberField {
             id: dayLetterSpacing
             label: i18n("Letter Spacing")
+        }
+        RowLayout {
+            Label {
+                text: i18n("Locale")
+            }
+            TextField {
+                id: locale
+
+                placeholderText: "en_US"
+                ToolTip.text: i18n("Set a specific locale for the date and time display, like 'en_US' for English (United States) or 'fr_FR' for French (France). Leave empty to use the system default locale.")
+                ToolTip.visible: hovered
+                ToolTip.delay: 800
+            }
         }
         RowLayout {
             Label {

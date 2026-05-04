@@ -8,11 +8,10 @@ import org.kde.plasma.plasma5support as Plasma5Support
 
 PlasmoidItem {
     id: root
-    
-    
+
     // setting background as transparent with a drop shadow
     Plasmoid.backgroundHints: PlasmaCore.Types.ShadowBackground | PlasmaCore.Types.ConfigurableBackground
-    
+
     // loading fonts
     FontLoader {
         id: font_anurati
@@ -22,7 +21,6 @@ PlasmoidItem {
         id: font_poppins
         source: "../fonts/Poppins.ttf"
     }
-    
 
     // setting preferred size
     preferredRepresentation: fullRepresentation
@@ -37,6 +35,7 @@ PlasmoidItem {
         // Updating time every minute
         Plasma5Support.DataSource {
             id: dataSource
+
             engine: "time"
             connectedSources: ["Local"]
             intervalAlignment: Plasma5Support.Types.AlignToMinute
@@ -44,6 +43,7 @@ PlasmoidItem {
 
             property bool use24HourFormat: plasmoid.configuration.use_24_hour_format
             property string timeCharacter: plasmoid.configuration.time_character
+            property string localeName: plasmoid.configuration.locale
             property string dateFormat: plasmoid.configuration.date_format
             property string timeFormat: plasmoid.configuration.time_format
             property string dayFormat: plasmoid.configuration.day_format
@@ -54,6 +54,40 @@ PlasmoidItem {
             readonly property string default12HourFormat: "hh:mm AP"
             readonly property int secondInterval: 1000
             readonly property int minuteInterval: 60000
+
+            function effectiveLocale() {
+                var custom = localeName ? localeName.trim() : ""
+                custom = custom.replace(/-/g, "_") // Replace hyphens with underscores for Qt locale compatibility
+                return custom.length > 0 ? Qt.locale(custom) : Qt.locale()
+            }
+
+            function formatDateLocaleAware(date, format, fallbackFormat = "dd MMM yyyy") {
+                var fmt = format && format.trim().length > 0 ? format.trim() : fallbackFormat
+
+                try {
+                    return date.toLocaleDateString(effectiveLocale(), fmt)
+                } catch (e) {
+                    return Qt.formatDate(date, format)
+                }
+            }
+
+            function formatTimeLocaleAware(date) {
+                var format = currentTimeFormat()
+                updateIntervalForFormat(format)
+
+                try {
+                    var formatted = date.toLocaleTimeString(effectiveLocale(), format)
+                    if (formatted && formatted.trim() !== "") {
+                        return formatted
+                    }
+                } catch (e) {
+                }
+
+                format = use24HourFormat ? default24HourFormat : default12HourFormat
+                updateIntervalForFormat(format)
+                return Qt.formatTime(date, format)
+            }
+
             function currentTimeFormat() {
                 var custom = timeFormat ? timeFormat.trim() : ""
                 return custom.length > 0 ? custom : (use24HourFormat ? default24HourFormat : default12HourFormat)
@@ -69,31 +103,18 @@ PlasmoidItem {
                 }
             }
 
-            function formatTimeSafely(date) {
-                var format = currentTimeFormat()
-                updateIntervalForFormat(format)
-                var formatted = ""
-                try {
-                    formatted = Qt.formatTime(date, format)
-                } catch (e) {
-                    formatted = ""
-                }
-                if (!formatted || formatted.trim() === "") {
-                    format = use24HourFormat ? default24HourFormat : default12HourFormat
-                    updateIntervalForFormat(format)
-                    formatted = Qt.formatTime(date, format)
-                }
-                return formatted
-            }
-
             onDataChanged: {
-                var curDate = dataSource.data["Local"]["DateTime"]
-                var formattedTime = formatTimeSafely(curDate)
+                var curDate = new Date()
+
+                var formattedTime = formatTimeLocaleAware(curDate)
+
                 var df = dayFormat && dayFormat.trim().length > 0 ? dayFormat : "dddd"
-                var dayText = Qt.formatDate(curDate, df)
+                var dayText = formatDateLocaleAware(curDate, df)
                 display_day.text = uppercaseDay ? dayText.toUpperCase() : dayText
-                var dateText = Qt.formatDate(curDate, dateFormat)
+
+                var dateText = formatDateLocaleAware(curDate, dateFormat)
                 display_date.text = uppercaseDate ? dateText.toUpperCase() : dateText
+
                 display_time.text = timeCharacter + " " + formattedTime + " " + timeCharacter
             }
 
@@ -111,9 +132,9 @@ PlasmoidItem {
                 dataChanged()
             }
 
-            Component.onCompleted: updateIntervalForFormat(currentTimeFormat())
+            onLocaleNameChanged: dataChanged()
 
-            
+            Component.onCompleted: updateIntervalForFormat(currentTimeFormat())
         }
 
         // Main Content
@@ -127,7 +148,7 @@ PlasmoidItem {
             // The day ("Tuesday", "Wednesday" etc..)
             PlasmaComponents.Label {
                 id: display_day
-                
+
                 // visible
                 visible: plasmoid.configuration.show_day
 
@@ -138,7 +159,7 @@ PlasmoidItem {
                 font.bold: plasmoid.configuration.day_font_bold
                 color: plasmoid.configuration.day_font_color
                 anchors.horizontalCenter: parent.horizontalCenter
-                horizontalAlignment: Text.AlignHCenter 
+                horizontalAlignment: Text.AlignHCenter
             }
 
             // The Date
